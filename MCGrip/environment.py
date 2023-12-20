@@ -6,8 +6,10 @@ import pygame
 import numpy as np
 from MCGrip.layout import BoardLayout
 
-board1 = BoardLayout(10, np.array(['F', 'I', 'L', 'N', 'P', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']))
-grid_info = board1.set_layout()
+board1 = BoardLayout(20, 8, np.array(['F', 'N', 'P', 'T', 'U', 'W', 'X', 'Y', 'Z']))
+AGENT_POS, grid_info = board1.set_board_layout()
+print(grid_info)
+TARGET_POS = grid_info[0]['piece_grids']
 
 class GridWorldEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 2}
@@ -92,7 +94,11 @@ class GridWorldEnv(gym.Env):
             self._agent_location + direction, 0, self.size - 1
         )
         # An episode is done iff the agent has reached the target
-        terminated = np.array_equal(self._agent_location, self._target_location)
+        # terminated = np.array_equal(self._agent_location, self._target_location)
+        terminated = 0
+        for i in range(len(TARGET_POS)):
+            if np.array_equal(AGENT_POS, TARGET_POS[i]):
+                terminated = 1
         reward = 1 if terminated else 0  # Binary sparse rewards
         observation = self._get_obs()
         info = self._get_info()
@@ -130,15 +136,10 @@ class GridWorldEnv(gym.Env):
             self.window_size / self.size
         )  # The size of a single grid square in pixels
 
-        init_flag = True
-        for p in grid_info:
-            if init_flag:
-                for pos in p["target_grid"]:
-                    self._draw_rect(canvas, p["target_color"], pos, pix_square_size)
-                init_flag = False
-            else:
-                for pos in p["piece_grid"]:
-                    self._draw_rect(canvas, p["piece_color"], pos, pix_square_size)
+        # Draw Pieces
+        for piece in grid_info:
+            for pos in piece["piece_grids"]:
+                self._draw_rect(canvas, piece["piece_colour"], pos, pix_square_size)
 
         # Now we draw the agent
         pygame.draw.circle(
