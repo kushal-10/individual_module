@@ -161,3 +161,5 @@ cython_debug/
 notes.txt
 test.py
 MCGrip/test2.py
+create_dataset.py
+Agents/a_star.py

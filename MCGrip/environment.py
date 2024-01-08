@@ -16,7 +16,7 @@ class GridWorldEnv(gym.Env):
 
     def __init__(self, render_mode=None, size=5):
         self.size = size  # The size of the square grid
-        self.window_size = 512  # The size of the PyGame window
+        self.window_size = 500  # The size of the PyGame window
 
         # Observations are dictionaries with the agent's and the target's location.
         # Each location is encoded as an element of {0, ..., `size`}^2, i.e. MultiDiscrete([size, size]).
@@ -135,6 +135,7 @@ class GridWorldEnv(gym.Env):
         pix_square_size = (
             self.window_size / self.size
         )  # The size of a single grid square in pixels
+        print(pix_square_size)
 
         # Draw Pieces
         for piece in grid_info:
@@ -150,21 +151,21 @@ class GridWorldEnv(gym.Env):
         )
 
         # Finally, add some gridlines
-        for x in range(self.size + 1):
-            pygame.draw.line(
-                canvas,
-                0,
-                (0, pix_square_size * x),
-                (self.window_size, pix_square_size * x),
-                width=3,
-            )
-            pygame.draw.line(
-                canvas,
-                0,
-                (pix_square_size * x, 0),
-                (pix_square_size * x, self.window_size),
-                width=3,
-            )
+        # for x in range(self.size + 1):
+        #     pygame.draw.line(
+        #         canvas,
+        #         0,
+        #         (0, pix_square_size * x),
+        #         (self.window_size, pix_square_size * x),
+        #         width=3,
+        #     )
+        #     pygame.draw.line(
+        #         canvas,
+        #         0,
+        #         (pix_square_size * x, 0),
+        #         (pix_square_size * x, self.window_size),
+        #         width=3,
+        #     )
 
         if self.render_mode == "human":
             # The following line copies our drawings from `canvas` to the visible window

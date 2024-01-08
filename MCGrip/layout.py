@@ -3,7 +3,7 @@ import numpy as np
 from MCGrip.pieces import PentominoPiece
 from MCGrip.definitions import COLOURS, COLOUR_NAMES
 
-seed = 42
+seed = 9
 np.random.seed(seed)
 
 # Setting the layout fixed for now i.e start positions of each piece are at every 5x5 grid
@@ -79,8 +79,8 @@ class BoardLayout():
         for i in range(1, len(all_start_positions)):
             piece_position = all_start_positions[i]
             piece_symbol = np.random.choice(list(self.symbols))
-            # piece_rotation = np.random.randint(0, 4)
-            piece_rotation = 0 # No rotation for now
+            piece_rotation = np.random.randint(0, 4)
+            # piece_rotation = 0 # No rotation for now
             piece_colour = np.random.choice(COLOUR_NAMES)
 
             piece = PentominoPiece(piece_symbol, piece_rotation, piece_position)
