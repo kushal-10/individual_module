@@ -4,19 +4,16 @@ import gym
 from gym import spaces
 import pygame
 import numpy as np
-from MCGrip.layout import BoardLayout
-
-board1 = BoardLayout(20, 8, np.array(['F', 'N', 'P', 'T', 'U', 'W', 'X', 'Y', 'Z']))
-AGENT_POS, grid_info = board1.set_board_layout()
-print(grid_info)
-TARGET_POS = grid_info[0]['piece_grids']
 
 class GridWorldEnv(gym.Env):
     metadata = {"render_modes": ["human", "rgb_array"], "render_fps": 2}
 
-    def __init__(self, render_mode=None, size=5):
+    def __init__(self, render_mode=None, size=5, grid_info=None, agent_pos=None, target_pos=None):
         self.size = size  # The size of the square grid
         self.window_size = 500  # The size of the PyGame window
+        self.grid_info = grid_info
+        self.agent_pos = agent_pos
+        self.target_pos = target_pos
 
         # Observations are dictionaries with the agent's and the target's location.
         # Each location is encoded as an element of {0, ..., `size`}^2, i.e. MultiDiscrete([size, size]).
@@ -65,7 +62,7 @@ class GridWorldEnv(gym.Env):
 
     def reset(self, seed=None, options=None):
         # We need the following line to seed self.np_random
-        super().reset(seed=seed)
+        # super().reset(seed=seed)
 
         # Fix initial Agent location at [0, 0]
         # No pentomino piece is placed at [0, 0]
@@ -96,8 +93,8 @@ class GridWorldEnv(gym.Env):
         # An episode is done iff the agent has reached the target
         # terminated = np.array_equal(self._agent_location, self._target_location)
         terminated = 0
-        for i in range(len(TARGET_POS)):
-            if np.array_equal(AGENT_POS, TARGET_POS[i]):
+        for i in range(len(self.target_pos)):
+            if np.array_equal(self.agent_pos, self.target_pos[i]):
                 terminated = 1
         reward = 1 if terminated else 0  # Binary sparse rewards
         observation = self._get_obs()
@@ -138,34 +135,18 @@ class GridWorldEnv(gym.Env):
         print(pix_square_size)
 
         # Draw Pieces
-        for piece in grid_info:
+        for piece in self.grid_info:
             for pos in piece["piece_grids"]:
                 self._draw_rect(canvas, piece["piece_colour"], pos, pix_square_size)
 
         # Now we draw the agent
         pygame.draw.circle(
             canvas,
-            (0, 0, 255),
+            (42, 42, 25),
             (self._agent_location + 0.5) * pix_square_size,
             pix_square_size / 3,
         )
 
-        # Finally, add some gridlines
-        # for x in range(self.size + 1):
-        #     pygame.draw.line(
-        #         canvas,
-        #         0,
-        #         (0, pix_square_size * x),
-        #         (self.window_size, pix_square_size * x),
-        #         width=3,
-        #     )
-        #     pygame.draw.line(
-        #         canvas,
-        #         0,
-        #         (pix_square_size * x, 0),
-        #         (pix_square_size * x, self.window_size),
-        #         width=3,
-        #     )
 
         if self.render_mode == "human":
             # The following line copies our drawings from `canvas` to the visible window

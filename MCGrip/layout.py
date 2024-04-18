@@ -3,8 +3,7 @@ import numpy as np
 from MCGrip.pieces import PentominoPiece
 from MCGrip.definitions import COLOURS, COLOUR_NAMES
 
-seed = 9
-np.random.seed(seed)
+
 
 # Setting the layout fixed for now i.e start positions of each piece are at every 5x5 grid
 
@@ -16,10 +15,13 @@ class BoardLayout():
         num_pieces: The number of pieces to be placed on the board
         symbols: A list of the pentomino symbols to be selected from
     '''
-    def __init__(self, N: int, num_pieces: int, symbols: np.array) -> None:
+    def __init__(self, N: int, num_pieces: int, symbols: np.array, seed: int) -> None:
         self.N = N
         self.num_pieces = num_pieces
         self.symbols = symbols
+        # self.seed = seed
+        # seed = 9
+        np.random.seed(seed)
 
     def valid(self, p1, pos):
         '''
@@ -72,16 +74,31 @@ class BoardLayout():
 
         return all_start_positions
 
-    def set_board_layout(self):
+    def set_board_layout(self, target_symbol=None, target_colour=None, level=None):
         all_start_positions = self.set_start_positions()
         agent_start_pos = all_start_positions[0] + 2 # Add 2, to get the center of agent block
         grid_info = []
+        available_symbols = list(self.symbols)  # List of available symbols
+        available_colours = list(COLOUR_NAMES)  # List of available colours
+
         for i in range(1, len(all_start_positions)):
             piece_position = all_start_positions[i]
-            piece_symbol = np.random.choice(list(self.symbols))
-            piece_rotation = np.random.randint(0, 4)
-            # piece_rotation = 0 # No rotation for now
-            piece_colour = np.random.choice(COLOUR_NAMES)
+
+            # Select a random symbol from the available symbols
+            piece_symbol = np.random.choice(available_symbols)
+            if i == 1 and target_symbol:
+                piece_symbol = target_symbol  # Overwrite target symbol if specified
+            if level == "easy":
+                available_symbols.remove(piece_symbol)  # Remove the selected symbol from the available symbols, Only for easy level
+
+            # Select a random colour from the available colours
+            piece_colour = np.random.choice(available_colours)
+            if i == 1 and target_colour:
+                piece_colour = target_colour  # Overwrite target colour if specified
+            if level == "easy":
+                available_colours.remove(piece_colour)  # Remove the selected colour from the available colours, Only for easy level
+
+            piece_rotation = 0  # No rotation for now
 
             piece = PentominoPiece(piece_symbol, piece_rotation, piece_position)
             piece_grids = piece.get_grid_locations()
@@ -93,7 +110,7 @@ class BoardLayout():
                 "start_position": piece_position,
                 "piece_symbol": piece_symbol,
                 "piece_rotation": piece_rotation,
-                "piece_region": piece_region 
+                "piece_region": piece_region
             }
 
             grid_info.append(piece_data)
