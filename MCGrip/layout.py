@@ -13,12 +13,12 @@ class BoardLayout():
     Args:
         N: The size of the Pentomino Board Grid
         num_pieces: The number of pieces to be placed on the board
-        symbols: A list of the pentomino symbols to be selected from
+        shapes: A list of the pentomino shapes to be selected from
     '''
-    def __init__(self, N: int, num_pieces: int, symbols: np.array, seed: int) -> None:
+    def __init__(self, N: int, num_pieces: int, shapes: np.array, seed: int) -> None:
         self.N = N
         self.num_pieces = num_pieces
-        self.symbols = symbols
+        self.shapes = shapes
         # self.seed = seed
         # seed = 9
         np.random.seed(seed)
@@ -78,18 +78,18 @@ class BoardLayout():
         all_start_positions = self.set_start_positions()
         agent_start_pos = all_start_positions[0] + 2 # Add 2, to get the center of agent block
         grid_info = []
-        available_symbols = list(self.symbols)  # List of available symbols
+        available_shapes = list(self.shapes)  # List of available shapes
         available_colours = list(COLOUR_NAMES)  # List of available colours
 
         for i in range(1, len(all_start_positions)):
             piece_position = all_start_positions[i]
 
-            # Select a random symbol from the available symbols
-            piece_symbol = np.random.choice(available_symbols)
+            # Select a random symbol from the available shapes
+            piece_symbol = np.random.choice(available_shapes)
             if i == 1 and target_symbol:
                 piece_symbol = target_symbol  # Overwrite target symbol if specified
             if level == "easy":
-                available_symbols.remove(piece_symbol)  # Remove the selected symbol from the available symbols, Only for easy level
+                available_shapes.remove(piece_symbol)  # Remove the selected symbol from the available shapes, Only for easy level
 
             # Select a random colour from the available colours
             piece_colour = np.random.choice(available_colours)

@@ -69,7 +69,6 @@ class GridWorldEnv(gym.Env):
 
         # self._agent_location = np.array([0, 0])
         self._agent_location = np.array([10, 10])
-        print(f"Agent location: {self._agent_location} and type : {type(self._agent_location)}")
 
         # We will sample the target's location randomly until it does not coincide with the agent's location
         # self._target_location = np.array([10, 10])
@@ -132,7 +131,6 @@ class GridWorldEnv(gym.Env):
         pix_square_size = (
             self.window_size / self.size
         )  # The size of a single grid square in pixels
-        print(pix_square_size)
 
         # Draw Pieces
         for piece in self.grid_info:
