@@ -38,7 +38,7 @@ class GridWorldEnv(gym.Env):
             2: np.array([-1, 0]),
             3: np.array([0, -1]),
             4: np.array([0, 0]),
-            5: np.array([0, 0])
+            5: np.array([1, 1])
         }
 
         assert render_mode is None or render_mode in self.metadata["render_modes"]
