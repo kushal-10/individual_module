@@ -25,5 +25,21 @@ LEVELS_REGISTRY = [
                 "target_color" : "brown"
             }
         }
+    },
+
+    {
+        "level_name": "easy_temp",
+        "num_distractors": 3,
+        "grid_size": 20,
+        "num_boards": 2,
+        "multiplier": 5,
+        "boards": {
+            "board1": {
+                "target_color" : "red"
+            },
+            "board2": {
+                "target_color" : "blue"
+            }
+        }
     }
 ]

@@ -6,41 +6,36 @@ import numpy as np
 # Piece definitions for 0 rotation
 # Pieces are P, T, U, W, X, Z
 
-P = [[0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0]]
+# Shuft from 5x5 to 3x3 grid
+P = [
+    [0, 1, 1],
+    [0, 1, 1],
+    [0, 1, 0]]
 
-T = [[0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0]]
+T = [
+    [1, 1, 1],
+    [0, 1, 0],
+    [0, 1, 0]]
 
-U = [[0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 1, 0, 1, 0],
-    [0, 1, 1, 1, 0],
-    [0, 0, 0, 0, 0]]
+U = [
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 0, 0]]
 
-W = [[0, 0, 0, 0, 0],
-    [0, 1, 0, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 0, 1, 1, 0],
-    [0, 0, 0, 0, 0]]
+W = [
+    [1, 0, 0],
+    [1, 1, 0],
+    [0, 1, 1]]
 
-X = [[0, 0, 0, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 1, 1, 1, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0]]
+X = [
+    [0, 1, 0],
+    [1, 1, 1],
+    [0, 1, 0]]
 
-Z = [[0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [0, 0, 1, 1, 0],
-    [0, 0, 0, 0, 0]]
+Z = [
+    [1, 1, 0],
+    [0, 1, 0],
+    [0, 1, 1]]
 
 # Create a dictionary item for the pieces
 pieces_dict = {
@@ -84,42 +79,4 @@ class PentominoPiece():
         grid_marks = np.array(grid_marks)
 
         return grid_marks
-    
-    def get_region(self, agent_start_pos, piece_start_pos):
-        '''
-        Get the region of the piece w.r.t. the center of Pentomino board
-        Possible regions - top left, top, top right, left, right, bottom left, bottom, bottom right
-        Args:
-            agent_start_pos = The center of the Agent block (Should be 5x5 grid at the center of the board)
-            piece_start_pos = Co-ordinates of the top-left square of the 5x5 Piece block
-        Returns:
-            result = A string like "top left" or "bottom" out of 8 possible regions 
-        '''
-        pos_x = piece_start_pos[0]
-        pos_y = piece_start_pos[1]
-        ax1 = agent_start_pos[0] - 2
-        ay1 = agent_start_pos[1] - 2
-        ax2 = ax1 + 4
-        ay2 = ay1 + 4
-
-        result = ""
-        if pos_x <= ax1:
-            result += "left"
-            
-        if pos_x >= ax2:
-            result += "right"
-
-        if pos_y <= ay1:
-            if result == "":
-                result += "top"
-            else:
-                result = "top" + " " + result
-
-        if pos_y >= ay2:
-            if result == "":
-                result += "bottom"
-            else:
-                result = "bottom" + " " + result
-
-        return result
     
