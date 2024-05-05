@@ -61,7 +61,7 @@ class BoardLayout():
 
         return all_start_positions
 
-    def set_board_layout(self, target_symbol=None, target_colour=None, regions=None, level=None):
+    def set_board_layout(self, target_shape=None, target_colour=None, regions=None, level=None):
         all_start_positions = self.set_start_positions(regions)
         agent_start_pos = all_start_positions[0] + 1 # Make the start location of the agent back to center of the grid from top left corner 
         grid_info = []
@@ -71,12 +71,12 @@ class BoardLayout():
         for i in range(1, len(all_start_positions)):
             piece_position = all_start_positions[i]
 
-            # Select a random symbol from the available shapes
-            piece_symbol = np.random.choice(available_shapes)
-            if i == 1 and target_symbol:
-                piece_symbol = target_symbol  # Overwrite target symbol if specified
+            # Select a random shape from the available shapes
+            piece_shape = np.random.choice(available_shapes)
+            if i == 1 and target_shape:
+                piece_shape = target_shape  # Overwrite target shape if specified
             if level == "easy":
-                available_shapes.remove(piece_symbol)  # Remove the selected symbol from the available shapes, Only for easy level
+                available_shapes.remove(piece_shape)  # Remove the selected shape from the available shapes, Only for easy level
 
             # Select a random colour from the available colours
             piece_colour = np.random.choice(available_colours)
@@ -87,7 +87,7 @@ class BoardLayout():
 
             piece_rotation = 0  # No rotation for now
 
-            piece = PentominoPiece(piece_symbol, piece_rotation, piece_position)
+            piece = PentominoPiece(piece_shape, piece_rotation, piece_position)
             piece_grids = piece.get_grid_locations()
             piece_region = regions[i-1]
             piece_data = {
@@ -95,7 +95,7 @@ class BoardLayout():
                 "piece_colour": piece_colour,
                 "colour_value": COLOURS[piece_colour],
                 "start_position": piece_position,
-                "piece_symbol": piece_symbol,
+                "piece_shape": piece_shape,
                 "piece_rotation": piece_rotation,
                 "piece_region": piece_region
             }
@@ -108,11 +108,11 @@ class BoardLayout():
 if __name__ == '__main__':
     boardtemp = BoardLayout(10, 4, ['P', 'T', 'U', 'W', 'X', 'Z'], 69420)
     info = boardtemp.set_board_layout(
-        target_symbol = 'P',
+        target_shape = 'P',
         target_colour = 'red',
         regions = ['top', 'bottom', 'left', 'right'],
         level = 'easy')
-    
+
     print(info)
 
                   

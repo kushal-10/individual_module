@@ -1,4 +1,4 @@
-def shortest_path(A: list, B: list) -> list:
+def manhattan_pathfinder(A: list, B: list) -> list:
     """
     Returns the shortest path from point A to point B on a grid as a list of steps.
     
