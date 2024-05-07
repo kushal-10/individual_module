@@ -3,6 +3,7 @@ from MCGrip.layout import BoardLayout
 from utils import generate_utils
 from agents.manhattan import manhattan_pathfinder
 
+import progressbar
 import numpy as np
 import os
 
@@ -38,13 +39,13 @@ def gen_boards(split_name: str):
 
 def gen_instances(split_name: str):
     BOARDS = gen_boards(split_name)
-    print(len(BOARDS))
 
     # Check for Data/Levels Folder
     level_dir = os.path.join(SAVE_DIR, level_name, split_name)
     if not os.path.exists(level_dir):
         os.makedirs(level_dir)
 
+    bar = progressbar.ProgressBar(maxval=len(BOARDS)).start()
     for i, board in enumerate(BOARDS):
         board_dir = os.path.join(level_dir, f'board_{i}')
         img_dir = os.path.join(board_dir, 'images')
@@ -75,7 +76,11 @@ def gen_instances(split_name: str):
             _, _, _, _ = env.step(action)
             step_image = env.render()
             generate_utils.save_board_images(img_dir, step_image, f'step_{s + 1}')
+        bar.update(i)
 
     print(f"Saved all the generated instances for split {split_name} to data/{split_name}")
 
-gen_instances('test')
+if __name__ == '__main__':
+    # gen_instances('test')
+    gen_instances('train')
+    gen_instances('validation')
