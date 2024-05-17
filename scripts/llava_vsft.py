@@ -82,7 +82,7 @@ if __name__ == "__main__":
     ################
     # Model, Tokenizer & Processor
     ################
-    LLAVA_CHAT_TEMPLATE = """{% if not add_generation_prompt is defined %}{% set add_generation_prompt = false %}{% endif %}A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. {% for message in messages %}{% if message['role'] == 'user' %}USER: {% else %}ASSISTANT: {% endif %}{% for item in message['content'] %}{% if item['type'] == 'text' %}{{ item['text'] }}{% elif item['type'] == 'image' %}<image>{% endif %}{% endfor %}{% if message['role'] == 'user' %} {% else %}{{eos_token}}{% endif %}{% endfor %}{% if add_generation_prompt %}ASSISTANT: {% endif %}"""
+    LLAVA_CHAT_TEMPLATE = """{% if not add_generation_prompt is defined %}{% set add_generation_prompt = false %}{% endif %}A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. {% for message in messages %}{% if message['role'] == 'user' %}USER: {% else %}ASSISTANT: {% endif %}{% for item in message['content'] %}{% if item['type'] == 'text' %}{{ item['text'] }}{% if item['type'] == 'image' %}<image>{% endif %}{% endfor %}{% if message['role'] == 'user' %} {% else %}{{eos_token}}{% endif %}{% endfor %}{% if add_generation_prompt %}ASSISTANT: {% endif %}"""
 
     torch_dtype = (
         model_config.torch_dtype
@@ -121,8 +121,9 @@ if __name__ == "__main__":
                     raise ValueError("This collator only supports one image per example")
                 messages = example["messages"]
                 text = self.processor.tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=False
+                    messages, tokenize=False, add_generation_prompt=True
                 )
+                print(text)
                 texts.append(text)
                 byte_image = example["images"][0]['bytes']
                 image_data = io.BytesIO(byte_image)
