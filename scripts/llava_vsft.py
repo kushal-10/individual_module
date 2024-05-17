@@ -63,6 +63,7 @@ from trl import (
 
 from PIL import Image
 import io
+from scripts.templates import apply_llava_template
 
 tqdm.pandas()
 
@@ -82,7 +83,6 @@ if __name__ == "__main__":
     ################
     # Model, Tokenizer & Processor
     ################
-    LLAVA_CHAT_TEMPLATE = """{% if not add_generation_prompt is defined %}{% set add_generation_prompt = false %}{% endif %}A chat between a curious user and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the user's questions. {% for message in messages %}{% if message['role'] == 'user' %}USER <image>: {% else %}ASSISTANT: {% endif %}{% if message['role'] == 'user' %} {% else %}{{eos_token}}{% endif %}{% endfor %}{% if add_generation_prompt %}ASSISTANT: {% endif %}"""
 
     torch_dtype = (
         model_config.torch_dtype
@@ -99,7 +99,6 @@ if __name__ == "__main__":
         quantization_config=quantization_config,
     )
     tokenizer = AutoTokenizer.from_pretrained(model_config.model_name_or_path, use_fast=True)
-    tokenizer.chat_template = LLAVA_CHAT_TEMPLATE
     processor = AutoProcessor.from_pretrained(model_config.model_name_or_path)
     processor.tokenizer = tokenizer
 
@@ -120,15 +119,12 @@ if __name__ == "__main__":
                 if len(example["images"]) > 1:
                     raise ValueError("This collator only supports one image per example")
                 messages = example["messages"]
-                text = self.processor.tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=False
-                )
+                text = apply_llava_template(messages)
                 texts.append(text)
                 byte_image = example["images"][0]['bytes']
                 image_data = io.BytesIO(byte_image)
                 pil_image = Image.open(image_data)
                 images.append(pil_image)
-                print(type(pil_image))
 
             batch = self.processor(texts, images, return_tensors="pt", padding=True)
 
