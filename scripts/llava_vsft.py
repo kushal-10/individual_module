@@ -121,14 +121,14 @@ if __name__ == "__main__":
                     raise ValueError("This collator only supports one image per example")
                 messages = example["messages"]
                 text = self.processor.tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True
+                    messages, tokenize=False, add_generation_prompt=False
                 )
-                print(text)
                 texts.append(text)
                 byte_image = example["images"][0]['bytes']
                 image_data = io.BytesIO(byte_image)
                 pil_image = Image.open(image_data)
                 images.append(pil_image)
+                print(type(pil_image))
 
             batch = self.processor(texts, images, return_tensors="pt", padding=True)
 

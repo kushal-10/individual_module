@@ -56,9 +56,9 @@ def create_messages(initial_re: str, answer: str):
     return message
 
 
-def generate_csvs():
+def generate_jsons():
     '''
-    Generate and save CSV files for each leve/split containing messages + images
+    Generate and save JSON files for each leve/split containing messages + images
     '''
 
     for level in LEVELS:
@@ -90,13 +90,13 @@ def generate_csvs():
             SAVE_DIR = os.path.join('hf_data', level)
             if not os.path.exists(SAVE_DIR):
                 os.makedirs(SAVE_DIR)
-            SAVE_PATH = os.path.join(SAVE_DIR, f'{split}.csv')
+            SAVE_PATH = os.path.join(SAVE_DIR, f'{split}.json')
             data = {
                 'messages': MESSAGES,
                 'images': IMAGES
             }
             df = pd.DataFrame(data)
-            df.to_csv(SAVE_PATH, index=False)
+            df.to_json(SAVE_PATH, index=False)
 
 if __name__ == '__main__':
     # Check if the dataset and splits are created.
@@ -106,12 +106,12 @@ if __name__ == '__main__':
     except FileNotFoundError as e:
         print(e)
 
-    generate_csvs()
+    generate_jsons()
 
-    # # Check CSVS
-    # df1 = pd.read_csv('hf_data/easy/train.csv')
-    # df2 = pd.read_csv('hf_data/easy/test.csv')
-    # df3 = pd.read_csv('hf_data/easy/validation.csv')
+    # # Check JSONs
+    # df1 = pd.read_json('hf_data/easy/train.json')
+    # df2 = pd.read_json('hf_data/easy/test.json')
+    # df3 = pd.read_json('hf_data/easy/validation.json')
     # #16142, 5406, 5358
     # print(len(df1), len(df2), len(df3))
 
