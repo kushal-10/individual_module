@@ -64,11 +64,9 @@ def gen_instances(split_name: str):
         initial_re = generate_utils.generate_initial_re(board['grid_information'])
         generate_utils.save_as_json({"initial_re": initial_re}, os.path.join(txt_dir, 'initial_re.json'))
 
-        # Get Steps
+        # Save Steps
         steps = manhattan_pathfinder(board['agent_position'], board['target_position'][0])
         steps_dict = generate_utils.generate_steps_dict(steps)
-
-        # Save Steps
         generate_utils.save_as_json(steps_dict, os.path.join(txt_dir, 'steps.json'))
 
         # Generate and save step images
@@ -81,6 +79,6 @@ def gen_instances(split_name: str):
     print(f"Saved all the generated instances for split {split_name} to data/{split_name}")
 
 if __name__ == '__main__':
-    # gen_instances('test')
     gen_instances('train')
+    gen_instances('test')
     gen_instances('validation')

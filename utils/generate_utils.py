@@ -30,4 +30,6 @@ def generate_initial_re(grid_info):
 
 def generate_steps_dict(steps):
     ACTION_TO_DIR = {0: "down", 1: "right", 2: "up", 3: "left"}
-    return {f"step_{n}": ACTION_TO_DIR[step_value] for n, step_value in enumerate(steps)}
+    steps_dict = {f"step_{n}": ACTION_TO_DIR[step_value] for n, step_value in enumerate(steps)}
+    steps_dict[f'step_{len(steps)}'] = "grip" # Add a 'grip' value at the end
+    return steps_dict

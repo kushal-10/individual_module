@@ -6,3 +6,7 @@ tqdm==4.65.0
 rich==13.4.2
 pygame==2.5.2
 progressbar==2.5
+fastparquet==2024.2.0 
+pyarrow==16.1.0
+datasets==2.19.1
+trl==0.8.6
