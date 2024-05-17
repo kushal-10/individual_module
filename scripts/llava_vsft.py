@@ -98,7 +98,7 @@ if __name__ == "__main__":
         device_map="auto",
         quantization_config=quantization_config,
     )
-    tokenizer = AutoTokenizer.from_pretrained(model_config.model_name_or_path, use_fast=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_config.model_name_or_path, use_fast=False)
     processor = AutoProcessor.from_pretrained(model_config.model_name_or_path)
     processor.tokenizer = tokenizer
 
