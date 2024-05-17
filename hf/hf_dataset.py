@@ -48,17 +48,13 @@ def create_messages(initial_re: str, answer: str):
         position += ' ' + re_split[6]
     prompt = f"Your are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']" 
 
-    message = [
-        {"content": [{ "index": None, "text": prompt, "type": "text" }, { "index": 0, "text": -1, "type": "image" }], 
-         "role": "user" }, 
-        { "content": [{ "index": None, "text": answer, "type": "text" } ], "role": "assistant" }
-    ]
+    message = prompt + " ANSWER:" + answer
     return message
 
 
-def generate_jsons():
+def generate_csvs():
     '''
-    Generate and save JSON files for each leve/split containing messages + images
+    Generate and save csv files for each leve/split containing messages + images
     '''
 
     for level in LEVELS:
@@ -73,8 +69,8 @@ def generate_jsons():
             bar = progressbar.ProgressBar(maxval=len(boards)).start()
             for i, board_path in enumerate(boards):
                 # Load Initial RE and steps
-                re_json = load_json(os.path.join(split_path, board_path, 'text', 'initial_re.json'))
-                initial_re = re_json['initial_re']
+                re_csv = load_json(os.path.join(split_path, board_path, 'text', 'initial_re.json'))
+                initial_re = re_csv['initial_re']
                 steps_path = os.path.join(split_path, board_path, 'text', 'steps.json')
                 steps = load_json(steps_path)
 
@@ -90,13 +86,13 @@ def generate_jsons():
             SAVE_DIR = os.path.join('hf_data', level)
             if not os.path.exists(SAVE_DIR):
                 os.makedirs(SAVE_DIR)
-            SAVE_PATH = os.path.join(SAVE_DIR, f'{split}.json')
+            SAVE_PATH = os.path.join(SAVE_DIR, f'{split}.csv')
             data = {
                 'messages': MESSAGES,
                 'images': IMAGES
             }
             df = pd.DataFrame(data)
-            df.to_json(SAVE_PATH, index=False)
+            df.to_csv(SAVE_PATH, index=False)
 
 if __name__ == '__main__':
     # Check if the dataset and splits are created.
@@ -106,12 +102,12 @@ if __name__ == '__main__':
     except FileNotFoundError as e:
         print(e)
 
-    generate_jsons()
+    generate_csvs()
 
-    # # Check JSONs
-    # df1 = pd.read_json('hf_data/easy/train.json')
-    # df2 = pd.read_json('hf_data/easy/test.json')
-    # df3 = pd.read_json('hf_data/easy/validation.json')
+    # # Check csvs
+    # df1 = pd.read_csv('hf_data/easy/train.csv')
+    # df2 = pd.read_csv('hf_data/easy/test.csv')
+    # df3 = pd.read_csv('hf_data/easy/validation.csv')
     # #16142, 5406, 5358
     # print(len(df1), len(df2), len(df3))
 
