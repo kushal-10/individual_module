@@ -61,6 +61,9 @@ from trl import (
     get_kbit_device_map,
 )
 
+from PIL import Image
+import io
+
 tqdm.pandas()
 
 if TRL_USE_RICH:
@@ -121,7 +124,10 @@ if __name__ == "__main__":
                     messages, tokenize=False, add_generation_prompt=False
                 )
                 texts.append(text)
-                images.append(example["images"][0])
+                byte_image = example["images"][0]['bytes']
+                image_data = io.BytesIO(byte_image)
+                pil_image = Image.open(image_data)
+                images.append(pil_image)
 
             batch = self.processor(texts, images, return_tensors="pt", padding=True)
 
