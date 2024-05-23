@@ -12,21 +12,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-# regular:
-python scripts/llava_vsft.py \
-    --dataset_name="Koshti10/pentomino-easy-vsft" \
-    --model_name_or_path="llava-hf/llava-1.5-7b-hf" \
-    --learning_rate=1.4e-5 \
-    --per_device_train_batch_size=8 \
-    --gradient_accumulation_steps=1 \
-    --output_dir="data/vsft-llava-1.5-7b-hf" \
-    --logging_steps=5 \
-    --num_train_epochs=1 \
-    --gradient_checkpointing \
-    --remove_unused_columns=False \
-    --torch_dtype=float16 
-"""
 
 import logging
 import os
