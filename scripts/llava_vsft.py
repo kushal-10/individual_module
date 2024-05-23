@@ -25,8 +25,7 @@ python scripts/llava_vsft.py \
     --num_train_epochs=1 \
     --gradient_checkpointing \
     --remove_unused_columns=False \
-    --torch_dtype=float16 \
-    --fp16=True 
+    --torch_dtype=float16 
 """
 
 import logging
@@ -143,7 +142,7 @@ if __name__ == "__main__":
     raw_datasets = load_dataset(sft_script_args.dataset_name)
     train_dataset = raw_datasets[sft_script_args.dataset_train_split]
     eval_dataset = raw_datasets[sft_script_args.dataset_test_split]
-
+                        
     ################
     # Optional rich context managers
     ###############
