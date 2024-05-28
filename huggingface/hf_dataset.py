@@ -92,6 +92,7 @@ def generate_csvs():
                 'images': IMAGES
             }
             df = pd.DataFrame(data)
+            df = df.sample(frac=1).reset_index(drop=True)
             df.to_csv(SAVE_PATH, index=False)
 
 if __name__ == '__main__':
