@@ -23,8 +23,6 @@
 ### Base Setup
 For Linux (Ubuntu 22.04)- 
 
-1) Setup main repo
-
 ```python
 git clone https://github.com/kushal-10/individual_module.git
 cd individual_module
@@ -33,19 +31,6 @@ pip install -r requirements.txt
 ```
 
 Use ``` $env:PYTHONPATH = ".;DRIVE:\...\individual_module" ``` if using Windows.
-
-2) Clone LLaVA repo under the root folder where ```individual_module``` is cloned
-   
-```python
-git clone https://github.com/haotian-liu/LLaVA.git
-```
-
-    ├── root_folder                    
-    │   ├── individual_module           # This repo
-    |   └── LLaVA                       # LLaVA repo
-    └── ...
-
-Refer to further setup instructions mentioned on their repo - [LLaVA](https://github.com/haotian-liu/LLaVA)
 
 ### Create splits
 
@@ -65,9 +50,8 @@ This generates the gameplay for each board setting in the previous step, used fo
 ```data``` folder.
 
 
-### LLaVA Dataset 
-After generating the instances (steps + initial_re + images), convert that data into LLaVA compatible format by running
+### Create HF dataset
 
-```python
-python3 instances/create_llava_data.py 
-```
+
+### LLaVA Dataset (Deprecated)
+Check mode/llava_github branch
