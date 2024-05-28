@@ -65,4 +65,9 @@ This generates the gameplay for each board setting in the previous step, used fo
 ```data``` folder.
 
 
-### Setup LLaVA
+### LLaVA Dataset 
+After generating the instances (steps + initial_re + images), convert that data into LLaVA compatible format by running
+
+```python
+python3 instances/create_llava_data.py 
+```
