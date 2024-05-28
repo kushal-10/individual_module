@@ -1,10 +1,15 @@
 # CoGRIP
 
 ## Structure
-
+    ├──------------------------------------------------------------------------------------------
     ├── agents                    
     │   ├── manhattan.py           # Manhattan path finder
     |   └── ...
+    ├── huggingface                
+    │   ├── tune_llava.py          # Fine tuning script for llava-hf models
+    │   ├── template.py            # Script to apply Jinja template
+    │   ├── hf_dataset.py          
+    │   ├── create_parquet.py      # Generate parquet data for Huggingface 
     ├── instances                 
     │   ├── create_splits.py       # Generate Easy level splits
     |   └── generate_instances.py  # Setup the images, InitialRE and simulate the instances                  
@@ -15,8 +20,11 @@
     │   ├── pieces.py              # Pieces Definitions + Basic Calculations
     ├── splits                 
     │   ├── easy                  
-    │   │   ├── metadata.json      # Contains instance distribution across splits                
-    └── ...
+    │   │   ├── metadata.json      # Contains instance distribution across splits     
+    ├── utils                      # Various utility functions
+    │   ├── generate_utils.py         
+    │   ├── layout_utils.py                    
+    └──-------------------------------------------------------------------------------------------
 
 ## Usage
 
@@ -50,8 +58,21 @@ This generates the gameplay for each board setting in the previous step, used fo
 ```data``` folder.
 
 
-### Create HF dataset
+### HF dataset
 
+The dataset used here is already available as a Huggingface dataset and can be directly used from the datasets library to start the instruction tuning.
+
+However to replicate the dataset creation; run the following commands
+
+1) Creates the csv files containing messages and image paths
+```python
+python3 huggingface/hf_dataset.py 
+```
+
+2) Converts the messages and image paths to parquet objects for each split
+```python
+python3 huggingface/create_parquet.py
+```
 
 ### LLaVA Dataset (Deprecated)
 Check mode/llava_github branch
