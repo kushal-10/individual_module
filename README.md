@@ -4,7 +4,6 @@
 
     ├── agents                    
     │   ├── manhattan.py           # Manhattan path finder
-    │   ├── llava15.py             # Llava1.5 as follower
     |   └── ...
     ├── instances                 
     │   ├── create_splits.py       # Generate Easy level splits
@@ -23,14 +22,30 @@
 
 ### Base Setup
 For Linux (Ubuntu 22.04)- 
+
+1) Setup main repo
+
 ```python
 git clone https://github.com/kushal-10/individual_module.git
-cd individual_module.git
+cd individual_module
 export PYTHONPATH=.:$PYTHONPATH
 pip install -r requirements.txt
 ```
 
 Use ``` $env:PYTHONPATH = ".;DRIVE:\...\individual_module" ``` if using Windows.
+
+2) Clone LLaVA repo under the root folder where ```individual_module``` is cloned
+   
+```python
+git clone https://github.com/haotian-liu/LLaVA.git
+```
+
+    ├── root_folder                    
+    │   ├── individual_module           # This repo
+    |   └── LLaVA                       # LLaVA repo
+    └── ...
+
+Refer to further setup instructions mentioned on their repo - [LLaVA](https://github.com/haotian-liu/LLaVA)
 
 ### Create splits
 
@@ -50,3 +65,4 @@ This generates the gameplay for each board setting in the previous step, used fo
 ```data``` folder.
 
 
+### Setup LLaVA
