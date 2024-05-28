@@ -7,7 +7,7 @@ import progressbar
 LEVEL = 'easy'
 
 # Create save folder
-SAVE_DIR = os.path.join('parquet_data', LEVEL)
+SAVE_DIR = os.path.join('data', 'parquet_data', LEVEL)
 if not os.path.exists(SAVE_DIR):
     os.makedirs(SAVE_DIR)
 
@@ -64,10 +64,10 @@ def create_parquet_file(file_path: str):
     
 if __name__=='__main__':
 
-    level_name = 'easy'
-    train_path = os.path.join('hf_data', level_name, 'train.csv')
-    test_path = os.path.join('hf_data', level_name, 'test.csv')
-    validation_path = os.path.join('hf_data', level_name, 'validation.csv')
+    csv_dir = os.path.join('data', 'hf_data', LEVEL)
+    train_path = os.path.join(csv_dir, 'train.csv')
+    test_path = os.path.join(csv_dir, 'test.csv')
+    validation_path = os.path.join(csv_dir, 'validation.csv')
 
     create_parquet_file(validation_path)
     create_parquet_file(test_path)
