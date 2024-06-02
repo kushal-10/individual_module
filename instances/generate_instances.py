@@ -13,7 +13,7 @@ import os
 '''
 # CONSTANTS
 SHAPES = ['P', 'T', 'U', 'W', 'X', 'Z']
-SAVE_DIR = 'data'
+SAVE_DIR = 'llavadata'
 
 level1_data = generate_utils.load_json(os.path.join('splits', 'easy', 'metadata.json'))
 level_name = level1_data['level']

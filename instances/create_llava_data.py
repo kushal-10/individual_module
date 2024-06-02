@@ -29,7 +29,7 @@ import random
 
 
 LEVEL = 'easy'
-DATA_DIR = os.path.join('data', LEVEL)
+DATA_DIR = os.path.join('llavadata', LEVEL)
 SPLITS = os.listdir(DATA_DIR)
 
 def llava_data():
