@@ -161,6 +161,7 @@ cython_debug/
 
 # For Repository
 data
+llavadata
 hf_data
 parquet_data
 
