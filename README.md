@@ -1,6 +1,6 @@
 # CoGRIP
 
-## Structure
+## I Structure
 
     ├── agents                    
     │   ├── manhattan.py           # Manhattan path finder
@@ -18,9 +18,9 @@
     │   │   ├── metadata.json      # Contains instance distribution across splits                
     └── ...
 
-## Usage
+## II Usage
 
-### Base Setup
+### A) Base Setup
 For Linux (Ubuntu 22.04)- 
 
 1) Setup main repo
@@ -32,8 +32,13 @@ export PYTHONPATH=.:$PYTHONPATH
 pip install -r requirements.txt
 ```
 
-Use ``` $env:PYTHONPATH = ".;DRIVE:\...\individual_module" ``` if using Windows.
+a) Use ``` $env:PYTHONPATH = ".;DRIVE:\...\individual_module" ``` if using Windows.
 
+b) If there is an error while installing packages; the following usually works; and then, if required, reinstall missing packages
+```python
+pip install --upgrade setuptools wheel
+pip cache purge
+```
 2) Clone LLaVA repo under the root folder where ```individual_module``` is cloned
    
 ```python
@@ -47,7 +52,7 @@ git clone https://github.com/haotian-liu/LLaVA.git
 
 Refer to further setup instructions mentioned on their repo - [LLaVA](https://github.com/haotian-liu/LLaVA)
 
-### Create splits
+### B) Create splits
 
 ```python
 python3 instances/create_splits.py
@@ -55,7 +60,7 @@ python3 instances/create_splits.py
 
 Use this to Generate a dataset of 2880 instances (60% train, 20% test, 20% validation). This creates 10 board setting fro each combination of 6 Colours, 6 Shapes and 8 Positions.
 
-### Generate instances
+### C) Generate instances
 
 ```python
 python3 instances/generate_instances.py
@@ -65,9 +70,17 @@ This generates the gameplay for each board setting in the previous step, used fo
 ```data``` folder.
 
 
-### LLaVA Dataset 
+### D) LLaVA Dataset 
 After generating the instances (steps + initial_re + images), convert that data into LLaVA compatible format by running
 
+Follow the convention mentioned in - [Finetune Llava](https://github.com/haotian-liu/LLaVA/blob/main/docs/Finetune_Custom_Data.md)
 ```python
 python3 instances/create_llava_data.py 
 ```
+
+### E) Train an adapter
+After generating the LLaVA dataset, use the script provided by the authors to train an adapter available here - [finetune_task_lora.sh](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/finetune_task_lora.sh)
+
+The exact command used here for fine-tuning is available under ```instances/finetune.sh```. Be sure, to check the dataset JSON file is in an appropriate location and modify its path accordingly
+
+This needs to be run under the LLaVA repository, Checkout their [README](https://github.com/haotian-liu/LLaVA?tab=readme-ov-file) for more information on how to proceed

@@ -170,9 +170,6 @@ deepspeed llava/train/train_mem.py \
     --dataloader_num_workers 1 \
     --lazy_preprocess True 
 
-On A100 - requires flash-attn, 
-if throws error:
-pip install --upgrade setuptools wheel
-pip cache purge, reinstall missing packages
+On A
 
 '''

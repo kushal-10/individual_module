@@ -7,3 +7,4 @@ rich==13.4.2
 pygame==2.5.2
 progressbar==2.5
 protobuf==5.27.0
+flash-attn
