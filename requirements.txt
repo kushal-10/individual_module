@@ -6,10 +6,5 @@ tqdm==4.65.0
 rich==13.4.2
 pygame==2.5.2
 progressbar==2.5
-fastparquet==2024.2.0 
-pyarrow==16.1.0
-datasets==2.19.1
-Jinja2
-protobuf==5.26.1
-peft==0.11.1
-git+https://github.com/huggingface/trl.git
+protobuf==5.27.0
+flash-attn
