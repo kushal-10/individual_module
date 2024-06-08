@@ -81,6 +81,6 @@ python3 instances/create_llava_data.py
 ### E) Train an adapter
 After generating the LLaVA dataset, use the script provided by the authors to train an adapter available here - [finetune_task_lora.sh](https://github.com/haotian-liu/LLaVA/blob/main/scripts/v1_5/finetune_task_lora.sh)
 
-The exact command used here for fine-tuning is available under ```instances/finetune.sh```. Be sure, to check the dataset JSON file is in an appropriate location and modify its path accordingly
+The exact command used here for fine-tuning is available under ```instances/finetune.sh```. Be sure, to check the dataset JSON file is in an appropriate location and modify its path accordingly. A single Nvidia A100 80GB Node was used for this.
 
 This needs to be run under the LLaVA repository, Checkout their [README](https://github.com/haotian-liu/LLaVA?tab=readme-ov-file) for more information on how to proceed
