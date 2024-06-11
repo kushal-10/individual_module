@@ -7,7 +7,7 @@
 '''
 
 import torch
-from transformers import AUtoModelforVision2Seq, AutoAdapterModel, AutoTokenizer
+from transformers import AutoModelForVision2Seq, AutoAdapterModel, AutoTokenizer
 
 model_id = "llava-hf/llava-1.5-13b-hf"
 
