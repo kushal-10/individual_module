@@ -8,3 +8,4 @@ pygame==2.5.2
 progressbar==2.5
 protobuf==5.27.0
 flash-attn
+adapters==0.2.1
