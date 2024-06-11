@@ -7,24 +7,12 @@
 '''
 
 import torch
-from transformers import AutoModelForVision2Seq
+from transformers import AutoModelForVision2Seq, AutoTokenizer
+from adapters import AutoAdapterModel
 
-import os
+model_id = "llava-hf/llava-1.5-13b-hf"
 
-import torch
-from transformers import BertTokenizer
-from adapters import BertAdapterModel
+model = AutoAdapterModel.from_pretrained(model_id)
+tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-# Load pre-trained BERT tokenizer from Hugging Face
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-
-# An input sentence
-sentence = "It's also, clearly, great fun."
-
-# Tokenize the input sentence and create a PyTorch input tensor
-input_data = tokenizer(sentence, return_tensors="pt")
-
-# Load pre-trained BERT model from Hugging Face Hub
-# The `BertAdapterModel` class is specifically designed for working with adapters
-# It can be used with different prediction heads
-model = BertAdapterModel.from_pretrained('bert-base-uncased')
+print(model)
