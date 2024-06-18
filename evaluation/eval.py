@@ -24,10 +24,10 @@ prompt = "<image>\nYou are an intelligent agent playing a pentomino game. You ar
 image_file = "data/easy/test/board_0/images/step_0.png"
 
 # Load Processor from HF directly
-processor = AutoProcessor.from_pretrained(model_name, device_map="auto").to(device)
+processor = AutoProcessor.from_pretrained(model_name, device_map="auto")
 
 raw_image = Image.open(image_file).convert('RGB')
-inputs = processor(prompt, raw_image, return_tensors='pt')
+inputs = processor(prompt, raw_image, return_tensors='pt').to(device)
 
 output = model.generate(**inputs, max_new_tokens=200, do_sample=False)
 print(processor.decode(output[0][2:], skip_special_tokens=True))
