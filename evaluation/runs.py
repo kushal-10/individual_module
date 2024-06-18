@@ -36,7 +36,7 @@ class ModelRuns():
         """
 
         image = Image.open(image_path).convert("RGB")
-        inputs = self.processor(image, return_tensors="pt").to(self.device)
+        inputs = self.processor(prompt, image, return_tensors="pt").to(self.device)
         outputs = self.model.generate(**inputs, max_new_tokens=10, do_sample=False)
         response = processor.decode(output[0][2:], skip_special_tokens=True)
 
