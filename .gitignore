@@ -164,6 +164,8 @@ data
 llavadata
 hf_data
 parquet_data
+LLaVA/checkpoints
 
 # For User
 test.py
+
