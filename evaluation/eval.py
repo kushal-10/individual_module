@@ -7,18 +7,27 @@ TODOS - 1806
 
 Main cli command for inference
 
-python run_llava.py --model-path /root/LLaVA/llava/checkpoints/llava-2-7b-chat-task-qlora/best_llava_eval_model_llava_lora
---model-base /root/LLaVA/llava/llava-v1.5-7b
---image-file /root/dataset/images/0f47c0b5-2c77-45e6-87b0-89af46e99500.jpg
---query “why was this photo taken?”
-
-python run_llava.py --model-path /LLaVA/llava/checkpoints/llava-v1.5-13b-task-lora/adapter_model
---model-base /llava-v1.5-13b
---image-file /LLaVA/playground/data/llavadata/easy/test
---query “why was this photo taken?”
-
-project/LLaVA/playground/data/llavadata/easy/test
-
+Working (sort of) cli, but try CG solution
+python run_llava.py --model-path /LLaVA/llava/checkpoints/llava-v1.5-13b-task-lora/adapter_model \
+--model-base ../../../llava-1.5-13b-hf \
+--image-file /LLaVA/playground/data/llavadata/easy/test/board_0/images/step_0.png \
+--query "<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the red P shaped piece located on top left of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']"
 """
+
+from transformers import AutoModelForVision2Seq, AutoProcessor
+from peft import PeftModel
+
+# Load base model
+# model_name = "../llava-1.5-13b-hf"
+model_name = "llava-hf/llava-1.5-13b-hf"
+base_model = AutoModelForVision2Seq.from_pretrained(model_name)
+
+# Load fine-tuned adapter
+adapter_path = "../LLaVA/checkpoints/llava-v1.5-13b-task-lora/adapter_model"  # Replace with your adapter path
+model = PeftModel.from_pretrained(base_model, adapter_path)
+
+print(model)
+
+
 
 
