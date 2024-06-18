@@ -23,7 +23,7 @@ model_name = "llava-hf/llava-1.5-13b-hf"
 base_model = AutoModelForVision2Seq.from_pretrained(model_name)
 
 # Load fine-tuned adapter
-adapter_path = "../LLaVA/checkpoints/llava-v1.5-13b-task-lora/adapter_model"  # Replace with your adapter path
+adapter_path = "../LLaVA/checkpoints/llava-v1.5-13b-task-lora"  # Replace with your adapter path
 model = PeftModel.from_pretrained(base_model, adapter_path)
 
 print(model)
