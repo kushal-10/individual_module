@@ -16,6 +16,7 @@ class ModelRuns():
 
         self.model_id = model_id
         self.adapter_path = adapter_path
+        self.split_prefix = "ASSISTANT:"
 
         # Load Model and Processor
         self.model = AutoModelForVision2Seq.from_pretrained(self.model_id, device_map="auto", torch_dtype=torch.float16)
