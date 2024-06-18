@@ -1,18 +1,18 @@
-
-'''
+"""
+TODOS - 1806
 1) Use the adapters to do inference on an image
 - Try AutoAdapterModel loading for llava1.5
 2) Set up evaluation pipeline
 3) Use the adapters, base model and generate two results
-'''
 
-import torch
-from transformers import AutoModelForVision2Seq, AutoTokenizer
-from adapters import AutoAdapterModel
+Main cli command for inference
 
-model_id = "llava-hf/llava-1.5-13b-hf"
+python run_llava.py --model-path /root/LLaVA/llava/checkpoints/llava-2-7b-chat-task-qlora/best_llava_eval_model_llava_lora
+--model-base /root/LLaVA/llava/llava-v1.5-7b
+--image-file /root/dataset/images/0f47c0b5-2c77-45e6-87b0-89af46e99500.jpg
+--query “why was this photo taken?”
 
-model = AutoAdapterModel.from_pretrained(model_id)
-tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-print(model)
+"""
+
+
