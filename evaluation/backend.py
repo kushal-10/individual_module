@@ -20,7 +20,7 @@ class ModelRuns():
 
         # Load Model and Processor
         self.model = AutoModelForVision2Seq.from_pretrained(self.model_id, device_map="auto", torch_dtype=torch.float16)
-        if self.adapter_path:
+        if self.adapter_path != "":
             self.model = PeftModel.from_pretrained(self.model, self.adapter_path, device_map="auto", torch_dtype=torch.float16)
 
         self.processor = AutoProcessor.from_pretrained(self.model_id, device_map="auto")
