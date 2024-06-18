@@ -1,7 +1,7 @@
 # CoGRIP
 
 ## I Structure
-
+Update this at the end vmro..\
     ├── agents                    
     │   ├── manhattan.py           # Manhattan path finder
     |   └── ...
@@ -84,3 +84,13 @@ After generating the LLaVA dataset, use the script provided by the authors to tr
 The exact command used here for fine-tuning is available under ```instances/finetune.sh```. Be sure, to check the dataset JSON file is in an appropriate location and modify its path accordingly. A single Nvidia A100 80GB Node was used for this.
 
 This needs to be run under the LLaVA repository, Checkout their [README](https://github.com/haotian-liu/LLaVA?tab=readme-ov-file) for more information on how to proceed
+
+### F) Model Runs
+
+`evaluation/backend.py` contains the backend code to generate the action taken by the models [base or with adapter]
+
+`evaluation/metrics.py` should contain the metrics/scorer functions used to evaluate the model responses/actions
+
+`evaluation/runs.py` should generate the model outputs, and save them episode wise along with ground truth values
+
+`evaluation/eval.py` should contain the main eval code, with final o/p the score
