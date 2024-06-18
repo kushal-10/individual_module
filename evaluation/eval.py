@@ -12,6 +12,12 @@ python run_llava.py --model-path /root/LLaVA/llava/checkpoints/llava-2-7b-chat-t
 --image-file /root/dataset/images/0f47c0b5-2c77-45e6-87b0-89af46e99500.jpg
 --query “why was this photo taken?”
 
+python run_llava.py --model-path /LLaVA/llava/checkpoints/llava-v1.5-13b-task-lora/adapter_model
+--model-base /llava-v1.5-13b
+--image-file /LLaVA/playground/data/llavadata/easy/test
+--query “why was this photo taken?”
+
+project/LLaVA/playground/data/llavadata/easy/test
 
 """
 
