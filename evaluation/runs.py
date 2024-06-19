@@ -53,7 +53,7 @@ if __name__ == "__main__":
         position = re_split[5]
         if len(re_split) == 7:
             position += ' ' + re_split[6]
-        prompt = f"<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']"
+        prompt = f"<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']\nASSISTANT:"
 
 
         for image_path in image_paths:
@@ -68,6 +68,7 @@ if __name__ == "__main__":
 
             # Generate response:
             prediction = eval_model.generate_response(input_path, prompt)
+            print(prediction)
             actions.append(prediction)
 
             board_no = board.split('_')[-1]
