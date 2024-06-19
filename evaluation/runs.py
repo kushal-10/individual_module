@@ -24,6 +24,7 @@ if __name__ == "__main__":
     split = 'test'
     split_dir = os.path.join(root, level, split)
     boards = os.listdir(split_dir)
+    boards.sort()
 
     # Initialize data to collect
     save_name = 'llava15_base_test.csv'
@@ -36,6 +37,7 @@ if __name__ == "__main__":
     for board in tqdm(boards, desc="Processing Boards"):
         image_dir = os.path.join(split_dir, board, "images")
         image_paths = os.listdir(image_dir)
+        image_paths.sort()
 
         # Get prompt (Should be same for all images)
         # Get prompt + Ground truth values
@@ -54,7 +56,6 @@ if __name__ == "__main__":
         if len(re_split) == 7:
             position += ' ' + re_split[6]
         prompt = f"<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']\nASSISTANT:"
-
 
         for image_path in image_paths:
             # At single instance level
