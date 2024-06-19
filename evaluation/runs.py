@@ -13,10 +13,10 @@ if __name__ == "__main__":
     adapter_id = "../LLaVA/checkpoints/llava-v1.5-13b-task-lora"
 
     # Initialize Model
-    base_model = ModelRuns(model_id)
-    # adapter_model = ModelRuns(model_id, adapter_id)
+    # base_model = ModelRuns(model_id)
+    adapter_model = ModelRuns(model_id, adapter_id)
 
-    eval_model = base_model
+    eval_model = adapter_model
 
     # Initialize locations
     root = 'data'
