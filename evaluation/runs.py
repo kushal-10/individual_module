@@ -1,21 +1,11 @@
 # Model Runs, Save output
 
-"""
-Output Format
-model_id | generated_value | gold_truth | board_number | image |
-"""
 import os
 import progressbar
 import pandas as pd
 
 from evaluation.backend import ModelRuns
 from utils import generate_utils
-
-# prompt = "<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the red P shaped piece located on top left of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'grip', 'down']\n ASSISTANT:"
-# image_file = "data/easy/test/board_0/images/step_0.png"
-# response = model.generate_response(image_file, prompt)
-# print(f"Response: {response}")
-
 
 if __name__ == "__main__":
     model_id = "llava-hf/llava-1.5-13b-hf"
@@ -40,7 +30,7 @@ if __name__ == "__main__":
     image_numbers = []
 
     bar = progressbar.ProgressBar(maxval=len(boards)).start()
-    for i, board in enumerate(boards):
+    for board in tqdm(boards, desc="Processing Boards", ):
         image_dir = os.path.join(split_dir, board, "images")
         image_paths = os.listdir(image_dir)
 
@@ -80,7 +70,7 @@ if __name__ == "__main__":
 
         board_no = board.split('_')[-1]
         board_numbers.append(board_no) # Get Board number vale, for episodic evaluation
-        bar.update(i)
+        tqdm.write(f'Finished processing board : {board}')
 
     eval_data = {
         'actions': actions,
