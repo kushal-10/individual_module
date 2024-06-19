@@ -71,7 +71,6 @@ if __name__ == "__main__":
 
         board_no = board.split('_')[-1]
         board_numbers.append(board_no) # Get Board number vale, for episodic evaluation
-        tqdm.write(f'Finished processing board : {board}')
 
     eval_data = {
         'actions': actions,
