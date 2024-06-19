@@ -16,6 +16,8 @@ if __name__ == "__main__":
     base_model = ModelRuns(model_id)
     # adapter_model = ModelRuns(model_id, adapter_id)
 
+    eval_model = base_model
+
     # Initialize locations
     root = 'data'
     level = 'easy'
@@ -65,7 +67,7 @@ if __name__ == "__main__":
             gts.append(ground_truth)
 
             # Generate response:
-            prediction = adapter_model.generate_response(input_path, prompt)
+            prediction = eval_model.generate_response(input_path, prompt)
             actions.append(prediction)
 
             board_no = board.split('_')[-1]
