@@ -68,9 +68,8 @@ if __name__ == "__main__":
             prediction = adapter_model.generate_response(input_path, prompt)
             actions.append(prediction)
 
-
-        board_no = board.split('_')[-1]
-        board_numbers.append(board_no) # Get Board number vale, for episodic evaluation
+            board_no = board.split('_')[-1]
+            board_numbers.append(board_no) # Get Board number vale, for episodic evaluation
 
     eval_data = {
         'actions': actions,
