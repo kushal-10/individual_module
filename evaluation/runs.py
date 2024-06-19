@@ -31,7 +31,7 @@ if __name__ == "__main__":
     image_numbers = []
 
     bar = progressbar.ProgressBar(maxval=len(boards)).start()
-    for board in tqdm(boards, desc="Processing Boards", ):
+    for board in tqdm(boards, desc="Processing Boards"):
         image_dir = os.path.join(split_dir, board, "images")
         image_paths = os.listdir(image_dir)
 
