@@ -41,12 +41,12 @@ if __name__ == "__main__":
 
     bar = progressbar.ProgressBar(maxval=len(boards)).start()
     for i, board in enumerate(boards):
-        image_dir = os.path.join(split_dir, board, images)
+        image_dir = os.path.join(split_dir, board, "images")
         image_paths = os.listdir(image_dir)
 
         # Get prompt (Should be same for all images)
         # Get prompt + Ground truth values
-        text_dir = os.path.join(split_dir, board, text)
+        text_dir = os.path.join(split_dir, board, "text")
 
         # Load steps and Initial RE
         steps = generate_utils.load_json(os.path.join(text_dir, 'steps.json'))
