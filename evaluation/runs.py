@@ -13,8 +13,8 @@ if __name__ == "__main__":
     adapter_id = "../LLaVA/checkpoints/llava-v1.5-13b-task-lora"
 
     # Initialize Model
-    # base_model = ModelRuns(model_id)
-    adapter_model = ModelRuns(model_id, adapter_id)
+    base_model = ModelRuns(model_id)
+    # adapter_model = ModelRuns(model_id, adapter_id)
 
     # Initialize locations
     root = 'data'
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     boards = os.listdir(split_dir)
 
     # Initialize data to collect
-    save_name = 'llava15_adapter_test.csv'
+    save_name = 'llava15_base_test.csv'
     actions = []
     gts = []
     board_numbers = []
