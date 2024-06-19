@@ -6,8 +6,10 @@ model_id | generated_value | gold_truth | board_number | image |
 """
 import os
 import progressbar
+import pandas as pd
 
 from evaluation.backend import ModelRuns
+from utils import generate_utils
 
 # prompt = "<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the red P shaped piece located on top left of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'grip', 'down']\n ASSISTANT:"
 # image_file = "data/easy/test/board_0/images/step_0.png"
@@ -46,22 +48,56 @@ if __name__ == "__main__":
         # Get prompt + Ground truth values
         text_dir = os.path.join(split_dir, board, text)
 
+        # Load steps and Initial RE
+        steps = generate_utils.load_json(os.path.join(text_dir, 'steps.json'))
+        initial_re_json = generate_utils.load_json(os.path.join(text_dir, 'initial_re.json'))
+        initial_re = initial_re_json['initial_re']
+
+        # Generate prompt from initial RE
+        re_split = initial_re.split()
+        colour = re_split[2]
+        shape = re_split[3]
+        position = re_split[5]
+        if len(re_split) == 7:
+            position += ' ' + re_split[6]
+        prompt = f"<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']"
+
+
         for image_path in image_paths:
             # At single instance level
             # Get full path of the image
             input_path = os.path.join(image_dir, image_path)
             img_no = image_path.split('.')[0].split('_')[-1]
             image_numbers.append(img_no) # Get Image number value
+            step_value = image_path.split('.')[0]
+            ground_truth = steps[step_value]
+            gts.append(ground_truth)
+
+            # Generate response:
+            prediction = adapter_model.generate_response(input_path, prompt)
+            actions.append(prediction)
 
 
-
-
-
-
-
-        board_number = board.split('_')[-1]
+        board_no = board.split('_')[-1]
+        board_numbers.append(board_no) # Get Board number vale, for episodic evaluation
         bar.update(i)
 
+    eval_data = {
+        'actions': actions,
+        'ground_truths': gts,
+        'board_numbers': board_numbers,
+        'image_numbers': image_numbers,
+    }
+
+    df = pd.DataFrame(eval_data)
+
+    results_dir = 'results'
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+
+    save_path = os.path.join(results_dir, save_name)
+    df.to_csv(save_path, index=False)
+    print(f'Saved data to {save_path}')
 
 
 
