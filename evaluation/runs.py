@@ -3,6 +3,7 @@
 import os
 import progressbar
 import pandas as pd
+import tqdm
 
 from evaluation.backend import ModelRuns
 from utils import generate_utils
