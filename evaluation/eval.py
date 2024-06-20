@@ -1,6 +1,6 @@
 # Use this file to evaluate the model responses generated from runs.py, by using metrics.py
 # Generate results.csv and html for all model variants
-
+import pandas as pd
 from evaluation.metrics import Scorer
 
 results_registry = {
@@ -32,4 +32,16 @@ for result in results_registry.keys():
     success_3.append(llava_scorer.get_success_score(3))
     success_6.append(llava_scorer.get_success_score(6))
 
-print(success_3, success_6)
+res = {
+    'model_names': model_names,
+    'instance_scores': instance_scores,
+    'episodic_scores': episodic_scores,
+    'vicinity_3': vicinity_3,
+    'vicinity_6': vicinity_6,
+    'success_3': success_3,
+    'success_6': success_6
+}
+
+res_df = pd.DataFrame(res)
+res_df.to_csv('results/result.csv')
+res_df.to_html('results/result.html')
