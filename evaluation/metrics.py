@@ -42,7 +42,7 @@ class Scorer():
 
         return correct_response / len(self.predictions)
 
-    def get_episodic_scores(self):
+    def get_episodic_score(self):
         """
         Naive Episodic scorer
         Returns:
@@ -155,7 +155,7 @@ if __name__ == '__main__':
 
     scorer = Scorer('results/adapter_prompt2.csv')
     print(scorer.get_instance_score())
-    print(scorer.get_episodic_scores())
+    print(scorer.get_episodic_score())
     print(scorer.get_vicinity_score(3))
     print(scorer.get_success_score(5))
 
