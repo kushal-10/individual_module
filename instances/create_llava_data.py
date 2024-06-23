@@ -29,7 +29,7 @@ import random
 
 
 LEVEL = 'easy'
-DATA_DIR = os.path.join('llavadata', LEVEL)
+DATA_DIR = os.path.join('data', LEVEL)
 SPLITS = os.listdir(DATA_DIR)
 
 def llava_data():
@@ -56,8 +56,7 @@ def llava_data():
             position = re_split[5]
             if len(re_split) == 7:
                 position += ' ' + re_split[6]
-            prompt = f"<image>\nYou are an intelligent agent playing a pentomino game. You are given a board with 20 x 20 grids and a target piece. Your spawn location is represented by the black circle on the board. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word what next step will you take from ['left', 'right', 'up', 'down', 'grip']" 
-
+            prompt = f"USER: <image>\nYou are given a board with 20 x 20 grids and a target piece. There are 3 more distractor pieces. These pieces resemble one of the letters from ['P', 'T', 'U', 'W', 'X', 'Z']. Your spawn location is represented by the black circle on the board and you can only move ['left', 'right', 'up', 'down'] - Your task is to take a step or grip the piece. The step should be towards the direction of the target piece. Proceed to take the {colour} {shape} shaped piece located on {position} of the board. Only respond in one word.\nASSISTANT:"
 
             for img in os.listdir(image_dir):
                 image_name = img.split('.')[0]
@@ -84,7 +83,7 @@ def llava_data():
 
         random.shuffle(split_data)
 
-        SAVE_PATH = os.path.join(DATA_DIR, f"{LEVEL}_{split}.json")
+        SAVE_PATH = os.path.join('data', 'ft_data', f"{LEVEL}_{split}_optimized_prompt.json")
         generate_utils.save_as_json(split_data, SAVE_PATH)
         print(f"Data saved for split - {split} at {SAVE_PATH}")
 
