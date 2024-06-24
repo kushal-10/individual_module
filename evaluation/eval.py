@@ -4,8 +4,7 @@ import pandas as pd
 from evaluation.metrics import Scorer
 
 results_registry = {
-    'results/adapter_prompt1.csv': 'llava_adapter_optimized_prompt',
-    'results/adapter_prompt2.csv': 'llava_adapter_gpt_prompt',
+    'results/adapter_optimized_prompt_4_epoch.csv': 'llava_adapter_optimized_prompt_4_ep',
     'results/adapter_prompt3.csv': 'llava_adapter_naive_prompt',
     'results/base_prompt1.csv': 'llava_base_optimized_prompt',
     'results/base_prompt2.csv': 'llava_base_gpt_prompt',
