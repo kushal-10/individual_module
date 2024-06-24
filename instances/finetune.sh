@@ -5,8 +5,8 @@ deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path liuhaotian/llava-v1.5-13b \
     --version v1 \
-    --data_path ./playground/data/easy_train.json \
-    --image_folder ./playground/data \
+    --data_path ./playground/data/llavadata/easy_train_optimized_prompt.json \
+    --image_folder ./playground/ \
     --vision_tower openai/clip-vit-large-patch14-336 \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
@@ -15,8 +15,8 @@ deepspeed llava/train/train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir ./checkpoints/llava-v1.5-13b-task-lora \
-    --num_train_epochs 1 \
+    --output_dir ./checkpoints/llava-v1.5-13b-task-lora-optimized \
+    --num_train_epochs 4 \
     --per_device_train_batch_size 4 \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps 1 \
@@ -33,4 +33,5 @@ deepspeed llava/train/train_mem.py \
     --model_max_length 2048 \
     --gradient_checkpointing True \
     --dataloader_num_workers 1 \
-    --lazy_preprocess True
+    --lazy_preprocess True \
+    --report_to wandb
