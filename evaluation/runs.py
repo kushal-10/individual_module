@@ -21,13 +21,13 @@ if __name__ == "__main__":
     # Initialize locations
     root = 'data'
     level = 'easy'
-    split = 'test'
+    split = 'train'
     split_dir = os.path.join(root, level, split)
     boards = os.listdir(split_dir)
     boards.sort()
 
     # Initialize data to collect
-    save_name = 'adapter_optimized_prompt_4_epoch.csv'
+    save_name = 'adapter_oe4_training.csv'
     actions = []
     gts = []
     board_numbers = []
