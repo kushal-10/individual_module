@@ -76,7 +76,7 @@ if __name__ == "__main__":
 
             # Generate response:
             prediction = eval_model.generate_response(input_path, prompt)
-            print(prediction)
+            # print(prediction)
             actions.append(prediction)
 
             board_no = board.split('_')[-1]
